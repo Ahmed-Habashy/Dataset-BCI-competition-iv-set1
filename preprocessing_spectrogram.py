@@ -9,7 +9,7 @@ import scipy.io
 #from braindecode.datasets import MOABBDataset
 sub = "c" 
 
-dataset1 = scipy.io.loadmat('D:\PhD Ain Shams\Dr Seif\GANs\Dataset BCI competition iv\BCIIV_1\BCICIV_calib_ds1{}.mat'.format(sub), struct_as_record=True)
+dataset1 = scipy.io.loadmat('Dataset BCI competition iv\BCIIV_1\BCICIV_calib_ds1{}.mat'.format(sub), struct_as_record=True)
 print(dataset1.keys())
 # SciPy.io.loadmat does not deal well with Matlab structures, resulting in lots of
 # extra dimensions in the arrays. This makes the code a bit more cluttered
@@ -232,7 +232,7 @@ def get_concat_v(im1, im2, im3):
 
 #%%
 from scipy import signal
-# import scipy.signal 
+
 
 
 
@@ -278,25 +278,16 @@ def stft_data(X, window_size=128, draw=False, cl = 1):
                 # plt.title('STFT Magnitude_ch:%d' %j )
                 # plt.ylabel('Frequency [Hz]')
                 # plt.xlabel('Time [sec]')
-                plt.savefig('D:\PhD Ain Shams\Dr Seif\GANs\python_ex\BCI_IV_1\spectrogram\CL{0}_3ch\cl{0} STFT_{3}_ch {1}_t{2} .png'.format(cl ,j, i, sub), bbox_inches= 'tight', pad_inches= 0)
+                plt.savefig('\spectrogram\CL{0}_3ch\cl{0} STFT_{3}_ch {1}_t{2} .png'.format(cl ,j, i, sub), bbox_inches= 'tight', pad_inches= 0)
                 plt.show() 
-        img26 = Image.open('D:\PhD Ain Shams\Dr Seif\GANs\python_ex\BCI_IV_1\spectrogram\CL{0}_3ch\cl{0} STFT_{2}_ch 26_t{1} .png' .format(cl , i, sub)) # Path to image
-        img28 = Image.open('D:\PhD Ain Shams\Dr Seif\GANs\python_ex\BCI_IV_1\spectrogram\CL{0}_3ch\cl{0} STFT_{2}_ch 28_t{1} .png' .format(cl , i, sub)) # Path to image
-        img30 = Image.open('D:\PhD Ain Shams\Dr Seif\GANs\python_ex\BCI_IV_1\spectrogram\CL{0}_3ch\cl{0} STFT_{2}_ch 30_t{1} .png' .format(cl , i, sub)) # Path to image
-        get_concat_v(img26, img28, img30).save('D:\PhD Ain Shams\Dr Seif\GANs\python_ex\BCI_IV_1\spectrogram\sub_{2}\CL{0}\cl{0} ch3_{2}_tr{1}.bmp' .format(cl , i, sub)) 
+        img26 = Image.open('\spectrogram\CL{0}_3ch\cl{0} STFT_{2}_ch 26_t{1} .png' .format(cl , i, sub)) # Path to image
+        img28 = Image.open('\spectrogram\CL{0}_3ch\cl{0} STFT_{2}_ch 28_t{1} .png' .format(cl , i, sub)) # Path to image
+        img30 = Image.open('\spectrogram\CL{0}_3ch\cl{0} STFT_{2}_ch 30_t{1} .png' .format(cl , i, sub)) # Path to image
+        get_concat_v(img26, img28, img30).save('\spectrogram\sub_{2}\CL{0}\cl{0} ch3_{2}_tr{1}.bmp' .format(cl , i, sub)) 
     
 
     return ch_stft, f , t
-    #return Zxx, f, t 
+  
 #Apply the function
-# cl1_stft, num_freq, num_time =stft_data(trials_filt[cl1],128,draw=True,cl = 1)
-# cl2_stft, num_freq, num_time =stft_data(trials_filt[cl2],128,draw=True,cl = 2)
-# X_stft = {cl1: cl1_stft, cl2: cl2_stft}
-#print('cl1_stft.shape ',cl1_stft.shape)
-# print('f.shape ',num_freq.shape)
-# print('t.shape ',num_time.shape)
-
-
-
-
-
+cl1_stft, num_freq, num_time =stft_data(trials_filt[cl1],128,draw=True,cl = 1)
+cl2_stft, num_freq, num_time =stft_data(trials_filt[cl2],128,draw=True,cl = 2)
