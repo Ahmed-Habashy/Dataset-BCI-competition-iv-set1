@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """
 Created on Sat Oct 15 09:05:29 2022
-
 @author: ahmed
 """
 import numpy as np
@@ -45,20 +43,18 @@ cnn_batch_size = 9
 cnn_epochs = 700
 Ad_times = 1
 nfolds = 9
-R_nfolds = [ 4, 5, 8 ]
-# subject = "sub_e"
-subjects = [  "sub_b", "sub_g","sub_d", "sub_e"] #  "sub_b", "sub_c","sub_d", "sub_e", "sub_g"
+subject = "sub_e"
 total_cnn_acc=list()
 total_gan2_acc=list()
 
-for subject in subjects:
-# for nfolds in range(0,10):
-# for nfolds in R_nfolds:
+
+for nfolds in range(0,10):
+
     # fix random seed for reproducibility
     seed = 7
     tf.random.set_seed(seed)
     np.random.seed(seed)
-    img_folder =r'D:\PhD Ain Shams\Dr Seif\GANs\python_ex\BCI_IV_1\spectrogram\{}'.format(subject)   
+    img_folder =r'BCI_IV_1\spectrogram\{}'.format(subject)   
     print (subject)
     print (nfolds)
 
@@ -113,41 +109,6 @@ for subject in subjects:
     
     trainX, trainY, testX, testY = fold_split(x, y)        
     
-    #%% =========================== All Subjects Test =========================================
-#     def CNN_GAN_test(cnn=2):
-#             scores = list()
-#             for f in range(0,10):
-#                 if cnn == 2 :
-#                 # load the saved model
-#                     model = load_model('final_90/{0} GAN_results/fold_{2}/CNN_GAN/GAN_CNN2 models/{0}_GAN_{1}_CNN2_model.h5'.format( subject, Ad_times, f))
-#                     test_loss, test_acc= model.evaluate(testX[f],testY[f],verbose=0)
-#                     print('Test: ',f)
-#                     print('Test Accuracy',test_acc)
-#                     scores.append(test_acc)
-#                 else:
-#                     model = load_model('final_90/{0} GAN_results/fold_{2}/CNN_GAN/GAN_CNN models/{0}_GAN_{1}_CNN_model.h5'.format( subject, Ad_times, f))
-#                     test_loss, test_acc= model.evaluate(testX[f],testY[f],verbose=0)
-#                     print('Test: ',f)
-#                     print('Test Accuracy',test_acc)
-#                     scores.append(test_acc)
-#             print('\n >>>> {0} Accuracy: mean={1} std={2}, n={3}' .format (subject, mean(scores)*100, std(scores)*100, len(scores)))
-#             print ('*************************************')
-#             ## box and whisker plots of results
-#             #plt.boxplot(scores)
-#             #plt.show()
-#             #plot_model(model, show_shapes=True, expand_nested=True)
-#             return scores
-#     sub_gan_acc = CNN_GAN_test(cnn=1)
-#     total_gan_acc.append(sub_gan_acc)
-        
-#     sub_gan2_acc = CNN_GAN_test(cnn=2)
-#     total_gan2_acc.append(sub_gan2_acc)
-
-# print('**** GAN Accuaracy: mean=%.3f std=%.3f, n=%d' % (mean(total_gan_acc)*100, std(total_gan_acc)*100, len(total_gan_acc)))
-# # # print('**** Enhancement: mean=%.3f std=%.3f' % (mean(GAN_acc)*100 - mean(cnn_acc)*100, std(GAN_acc)*100 - std(cnn_acc)*100))
-
-# print('**** GAN2 Accuaracy: mean=%.3f std=%.3f, n=%d' % (mean(total_gan2_acc)*100, std(total_gan2_acc)*100, len(total_gan2_acc)))
-# # # print('**** Enhancement: mean=%.3f std=%.3f' % (mean(GAN2_acc)*100 - mean(cnn2_acc)*100, std(GAN2_acc)*100 - std(cnn2_acc)*100))
     
     #%% ================================== GAN ===========================
     # #==============================================================================  
