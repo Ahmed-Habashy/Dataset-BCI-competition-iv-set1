@@ -1,9 +1,4 @@
 
-"""
-Created on Sat Oct 15 09:05:29 2022
-
-@author: ahmed
-"""
 import numpy as np
 import os
 import tensorflow as tf
@@ -45,12 +40,11 @@ n_epochs = 300
 GAN_epochs = 300
 n_batch = 20
 cnn_batch_size = 9 
-cnn_epochs = 100
+cnn_epochs = 600
 Ad_times = 1
 R_nfolds = [ 9 ]
 subject = "sub_c"
-total_cnn_acc=list()
-total_gan2_acc=list()
+
 
 
     # fix random seed for reproducibility
@@ -59,7 +53,7 @@ tf.random.set_seed(seed)
 np.random.seed(seed)
 
 
-img_folder =r'D:\PhD Ain Shams\Dr Seif\GANs\python_ex\BCI_IV_1\spectrogram\gray\{}'.format(subject)   
+img_folder =r'gray\{}'.format(subject)   
 
 def create_dataset(img_folder):       
     img_data_array=[]
@@ -511,14 +505,14 @@ for nfolds in range(0,1):
     print ('GAN data shape:', x_train.shape, x_gan.shape )
     x_train = np.concatenate((x_tr, x_gan[0: Ad_times*(len(x_tr)//2)], x_gan[len(x_gan)//2: len(x_gan)//2 + Ad_times*( len(x_tr)//2) ] ))   
     y_train = np.concatenate((y_tr, y_gan[0: Ad_times*(len(y_tr)//2)], y_gan[len(y_gan)//2: len(y_gan)//2 + Ad_times*( len(y_tr)//2) ] ))  
-   
+    cnn_epochs = 600
+    model_training(x_train, y_train, x_ev, y_ev, 'gray/CNN_GAN/{0}_GAN{3}_{1}_CNN3_{2}.h5'.format( subject, Ad_times, nfolds, GAN_epochs), create_cnn3(), '{}_GAN_CNN3 Model accuracy fold {} --> AD={} \n'.format(  subject, nfolds, Ad_times))        
+    model_training(x_train, y_train, x_ev, y_ev, 'gray/CNN_GAN/{0}_GAN{3}_{1}_CNN3_{2}.h5'.format( subject, Ad_times, nfolds, GAN_epochs), create_cnn3(), '{}_GAN_CNN3 Model accuracy fold {} --> AD={} \n'.format(  subject, nfolds, Ad_times))        
+    cnn_epochs = 100
     model_training(x_train, y_train, x_ev, y_ev, 'gray/CNN_GAN/{0}_GAN{3}_{1}_CNN3_{2}.h5'.format( subject, Ad_times, nfolds, GAN_epochs), create_cnn3(), '{}_GAN_CNN3 Model accuracy fold {} --> AD={} \n'.format(  subject, nfolds, Ad_times))        
 
 #%%======================================= 10 fold test ==========================
 
-# for subject in subjects:
-# GAN_epochs = 300
-    
 def CNN_GAN_test(cnn):
     scores = list()
     for f in range(0,10):
@@ -548,11 +542,7 @@ def CNN_GAN_test(cnn):
             test_loss, test_acc= model.evaluate(testX[f],testY[f],verbose=0)
             print('CNN3: ',f,'  Accuracy',test_acc)
             scores.append(test_acc)
-        elif cnn == 00:  # old 28*28 gan
-            model = load_model('gray\CNN_cDCGAN\{0}_cDCGAN{3}_{1}_CNN3_{2}.h5'.format( subject, Ad_times, f, GAN_epochs))
-            test_loss, test_acc= model.evaluate(testX[f],testY[f],verbose=0)
-            print('CNN3: ',f,'  Accuracy',test_acc)
-            scores.append(test_acc)    
+   
     print('\n >>>> {0} Accuracy: mean={1} std={2}, n={3}' .format (subject, mean(scores)*100, std(scores)*100, len(scores)))
     print ('*************************************')
     ## box and whisker plots of results
@@ -561,14 +551,8 @@ def CNN_GAN_test(cnn):
     plot_model(model, show_shapes=True, expand_nested=True)
     return scores
 
+sub_cnn1_acc = CNN_GAN_test(cnn=1)
+sub_cnn2_acc = CNN_GAN_test(cnn=2)
+sub_gan2_acc = CNN_GAN_test(cnn=22)
 sub_cnn3_acc = CNN_GAN_test(cnn=3)
 sub_gan3_acc = CNN_GAN_test(cnn=33)
-# sub_gan2_acc = CNN_GAN_test(cnn=00)
-# total_gan2_acc.append(sub_gan2_acc)
-
-# # print('**** GAN Accuaracy: mean=%.3f std=%.3f, n=%d' % (mean(total_gan_acc)*100, std(total_gan_acc)*100, len(total_gan_acc)))
-# # # # print('**** Enhancement: mean=%.3f std=%.3f' % (mean(GAN_acc)*100 - mean(cnn_acc)*100, std(GAN_acc)*100 - std(cnn_acc)*100))
-
-# print('**** GAN2 Accuaracy: mean=%.3f std=%.3f, n=%d' % (mean(total_gan2_acc)*100, std(total_gan2_acc)*100, len(total_gan2_acc)))
-# # print('**** Enhancement: mean=%.3f std=%.3f' % (mean(GAN2_acc)*100 - mean(cnn2_acc)*100, std(GAN2_acc)*100 - std(cnn2_acc)*100))
-
