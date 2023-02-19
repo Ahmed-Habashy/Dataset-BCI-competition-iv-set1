@@ -1,12 +1,25 @@
-# Dataset-BCI-competition-iv-set1
-This code is written in Python, and it uses several libraries, including pandas, numpy, os, tensorflow (with the Keras API), cv2, and matplotlib. These libraries are imported at the beginning of the code.
+Title: Image Classification using Convolutional Neural Network and Generative Adversarial Network
+Description:
+This code is for classifying spectrogram images of Motor Movement/Imagery tasks using a Convolutional Neural Network (CNN) and Generative Adversarial Network (GAN). The code loads the dataset of spectrogram images of motor tasks, preprocesses the images, trains the CNN model using k-fold cross-validation and predicts the class labels of the test set. The GAN is used to generate images of the two classes that are used in the binary classification problem of the CNN model.
 
-The main purpose of this code is to perform experiments on Generative Adversarial Networks (GANs) for Brain-Computer Interface (BCI) systems. It loads the spectral images from a directory that contain different subjects' spectral images, then it creates a dataset from these images by resize these images and normalizing them between 0 and 1. The class_name list is also created to hold the name of the class corresponding to each image.
+Dependencies:
+numpy
+os
+tensorflow
+opencv-python
+matplotlib
+keras
+sklearn
+PIL
+Dataset:
+The dataset used for this code is the BCI-IV 1 dataset, which contains the EEG signals of 9 subjects performing Motor Movement/Imagery tasks. The dataset is preprocessed and transformed into spectrogram images using the Short Time Fourier Transform (STFT).
 
-The code uses KFold method from sklearn library to split the data into k folds where k=10 in this code (the number of subjects) to be used in the training and validation stages, also it defines a function to create the dataset which takes the folder directory as an input argument.
+Usage:
+The main file is the BCI_IV_1_GAN_CNN.py. Run the file to train and test the CNN and GAN models.
+The code can be modified to use other datasets of spectrogram images.
+The code can be modified to change the parameters of the CNN and GAN models.
+Credits:
+The code is adapted from the following sources:
 
-The code then uses the Keras API, a high-level neural networks API in TensorFlow, to define, train, and evaluate CNN models, GAN models, and GAN-CNN models. It uses several of the standard layers in Keras, such as Dense, Dropout, Flatten, Conv2D, and MaxPool2D. The code also uses several other functions and classes from the Keras and TensorFlow libraries to compile and train the models, such as Model, Sequential, SGD, MaxNorm, EarlyStopping, and ModelCheckpoint.
-
-Additionally, it uses os.path, sys and numpy.random libraries to create results folder and fix random seed for reproducibility. Finally, it uses os.path and os.makedirs functions to create folder for results, Also it uses os.path.exists() to check if the folder already exists or not.
-
-The results are the classification accuracy for each model, the models are trained and tested on different subjects and accuracy for each subject is saved in two lists (CNN_acc, GAN_acc) to compare between GAN-CNN models and CNN models.
+https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-to-classify-photos-of-dogs-and-cats/
+https://machinelearningmastery.com/how-to-develop-a-generative-adversarial-network-for-a-cifar-10-small-object-photographs-from-scratch/
