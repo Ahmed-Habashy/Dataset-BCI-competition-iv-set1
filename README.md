@@ -1,4 +1,4 @@
-# Title Image Classification using Convolutional Neural Network and Generative Adversarial Network
+# Image Classification using Convolutional Neural Network and Generative Adversarial Network
 Description:
 This code is for classifying spectrogram images of Motor Movement/Imagery tasks using a Convolutional Neural Network (CNN) and Generative Adversarial Network (GAN). The code loads the dataset of spectrogram images of motor tasks, preprocesses the images, trains the CNN model using k-fold cross-validation and predicts the class labels of the test set. The GAN is used to generate images of the two classes that are used in the binary classification problem of the CNN model.
 
